@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app/layout/shop_layout.dart';
 import 'package:shop_app/modules/login/login_screen.dart';
 import 'package:shop_app/shared/bloc_observer.dart';
 import 'package:shop_app/shared/components/constants.dart';
@@ -18,12 +19,18 @@ void main() {
     await CacheHelper.init();
     bool isDark = CacheHelper.getThemeMode();
     bool? onBoarding=CacheHelper.getData(key: IS_FIRST_TIME);
+    token=CacheHelper.getData(key: TOKEN);
+    print(token);
     Widget startWidget;
 
     if(onBoarding!=null){
-      startWidget=LoginScreen();
+      if(token!=null){
+        startWidget=ShopLayout();
+      }else {
+        startWidget = LoginScreen();
+      }
     }else{
-      startWidget= LoginScreen();
+      startWidget= OnBoardingScreen();
     }
 
     runApp( MyApp(isDark,startWidget));

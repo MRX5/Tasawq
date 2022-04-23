@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app/layout/cubit/shop_layout_cubit.dart';
+import 'package:shop_app/modules/home/cubit/home_cubit.dart';
 import 'package:shop_app/modules/login/cubit/login_cubit.dart';
 import 'package:shop_app/modules/register/cubit/register_cubit.dart';
 import 'package:shop_app/shared/cubit/app_cubit.dart';
 import 'package:shop_app/shared/cubit/app_states.dart';
-import 'package:shop_app/shared/styles/styles.dart';
+import 'package:shop_app/shared/styles/themes.dart';
 
 class MyApp extends StatelessWidget {
   final bool isDark;
@@ -21,11 +23,9 @@ class MyApp extends StatelessWidget {
               create:(BuildContext context)=>AppCubit()..changeThemeMode(fromSharedPref: isDark)
           ),
           BlocProvider(
-              create: (context)=>LoginCubit()
+            create: (BuildContext context)=>ShopLayoutCubit(),
           ),
-          BlocProvider(
-              create: (context)=>RegisterCubit()
-          ),
+          BlocProvider(create: (context)=>HomeCubit()..getHomeData()..getCategories())
         ],
 
         child:BlocConsumer<AppCubit,AppStates>(

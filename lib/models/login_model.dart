@@ -1,12 +1,12 @@
 class LoginModel{
-  bool? statue;
+  bool? status;
   String? message;
   UserData? data;
 
   LoginModel.fromJson(Map<String,dynamic>json){
-    statue=json['statue'];
+    status=json['status'];
     message=json['message'];
-    data=json['data']!=null?UserData.fromJson(json[data]):null;
+    data=json['data']!=null?UserData.fromJson(json['data']):null;
   }
 
 }

@@ -28,7 +28,7 @@ Widget defaultTextFormFiled({
         )
         ,
         prefixIcon: Icon(prefixIcon),
-        labelText: label,
+        hintText: label,
         suffixIcon: IconButton(
           icon: suffixIcon!=null?Icon(suffixIcon):const Icon(null),
           onPressed: onSuffixIconTap,
@@ -68,9 +68,37 @@ Widget defaultButton({
   );
 }
 
+Widget defaultTextButton({
+  required String text,
+  required Function() function
+}){
+  return TextButton(
+      onPressed: function,
+      child: Text(
+        text,
+        style: const TextStyle(
+            fontWeight: FontWeight.bold
+        ),
+      )
+  );
+}
+
 void navigateTo({
   required BuildContext context,
   required Widget screen
 }){
   Navigator.push(context, MaterialPageRoute(builder: (context)=>screen));
+}
+
+void navigateAndFinish({
+  required BuildContext context,
+required Widget screen
+}){
+  Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context)=>screen),
+    (Route<dynamic> route) {
+      return false;
+    },
+  );
 }

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/models/login_model.dart';
 import 'package:shop_app/modules/register/cubit/register_states.dart';
 import 'package:shop_app/shared/remote/dio_helper.dart';
+import 'package:shop_app/shared/remote/end_points.dart';
 
 class RegisterCubit extends Cubit<RegisterStates>{
   RegisterCubit():super(RegisterInitialState());
@@ -26,7 +27,9 @@ class RegisterCubit extends Cubit<RegisterStates>{
     required String password,
     required String phone
   }){
-    DioHelper.postData(url: 'register',
+
+    emit(RegisterUserLoadingState());
+    DioHelper.postData(url: REGISTER,
         data: {
           'email':email,
           'name':username,

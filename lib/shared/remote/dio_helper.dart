@@ -6,7 +6,7 @@ class DioHelper {
 
   static inti() {
     dio =
-        Dio(BaseOptions(baseUrl: _BASE_URL, receiveDataWhenStatusError: true));
+        Dio(BaseOptions(baseUrl: _BASE_URL, receiveDataWhenStatusError: true,contentType: 'application/json'));
   }
 
   static Future<Response> getData(
@@ -18,7 +18,6 @@ class DioHelper {
       dio.options.headers={
         'lang':lang,
         'Authorization':token??'',
-        'Content-Type': 'application/json',
       };
     return await dio.get(url,queryParameters: query);
   }
@@ -33,7 +32,6 @@ class DioHelper {
       dio.options.headers={
         'lang':lang,
         'Authorization':token??'',
-        'Content-Type': 'application/json',
       };
     return  dio.post(url,data: data,queryParameters: query);
   }
@@ -48,7 +46,6 @@ class DioHelper {
       dio.options.headers={
         'lang':lang,
         'Authorization':token??'',
-        'Content-Type': 'application/json',
       };
     return dio.put(url,data: data,queryParameters: query);
   }
