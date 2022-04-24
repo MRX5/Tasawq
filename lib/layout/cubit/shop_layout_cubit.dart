@@ -30,4 +30,6 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates>{
     emit(ShopLayoutBottomNavChangeState());
   }
 
+
+
 }

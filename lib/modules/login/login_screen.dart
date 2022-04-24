@@ -148,16 +148,16 @@ class LoginScreen extends StatelessWidget {
           listener: (context,state){
               if(state is LoginUserSuccessState){
                 if(state.loginModel.status!){
-                  print(state.loginModel.data?.token);
+                  showToast(msg: state.loginModel.message!, state: ToastState.SUCCESS);
                   CacheHelper.saveData(key: TOKEN, value: state.loginModel.data?.token)
                   .then((value){
                       navigateAndFinish(context: context, screen:  ShopLayout());
                   });
                 }else{
-                  print(state.loginModel.message);
+                    showToast(msg: state.loginModel.message!, state: ToastState.WARNING);
                 }
               }else if(state is LoginUserErrorState){
-                print(state.error);
+                showToast(msg: state.error, state: ToastState.ERROR);
               }
           }
       ),

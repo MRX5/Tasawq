@@ -1,3 +1,4 @@
+import 'package:shop_app/models/change_favourites_model.dart';
 import 'package:shop_app/models/home_model.dart';
 
 abstract class HomeStates{}
@@ -20,7 +21,10 @@ class GetCategoriesErrorState extends HomeStates{
 
 
 class ChangeFavouritesState extends HomeStates{}
-class ChangeFavouritesSuccessState extends HomeStates{}
+class ChangeFavouritesSuccessState extends HomeStates{
+  final ChangeFavouritesModel favouritesModel;
+  ChangeFavouritesSuccessState(this.favouritesModel);
+}
 class ChangeFavouritesErrorState extends HomeStates{
   final String error;
   ChangeFavouritesErrorState(this.error);

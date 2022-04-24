@@ -6,8 +6,8 @@ class RegisterInitialState extends RegisterStates{}
 class RegisterChangePasswordVisibilityState extends RegisterStates{}
 class RegisterUserLoadingState extends RegisterStates{}
 class RegisterUserSuccessState extends RegisterStates{
-  final UserData? userData;
-  RegisterUserSuccessState(this.userData);
+  final LoginModel loginModel;
+  RegisterUserSuccessState(this.loginModel);
 }
 class RegisterUserErrorState extends RegisterStates{
   final String error;

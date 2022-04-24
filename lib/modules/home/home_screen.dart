@@ -3,11 +3,11 @@ import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:shop_app/models/category_model.dart';
 import 'package:shop_app/models/product_model.dart';
 import 'package:shop_app/modules/home/cubit/home_cubit.dart';
 import 'package:shop_app/modules/home/cubit/home_states.dart';
+import 'package:shop_app/shared/components/components.dart';
 import 'package:shop_app/shared/components/constants.dart';
 import 'package:shop_app/shared/styles/colors.dart';
 
@@ -19,14 +19,21 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is ChangeFavouritesSuccessState){
+          if(!state.favouritesModel.status!){
+            showToast(msg: state.favouritesModel.message!, state: ToastState.ERROR);
+          }
+        }else if(state is ChangeFavouritesErrorState){
+          showToast(msg: state.error, state: ToastState.ERROR);
+        }
+      },
       builder: (context, state) {
         var cubit = HomeCubit.get(context);
         return ConditionalBuilder(
             condition: cubit.homeModel != null && cubit.categoryModel != null,
             builder: (context) => buildHomeWidget(cubit.homeModel, cubit),
-            fallback: (context) =>
-            const Center(child: CircularProgressIndicator())
+            fallback: (context) => state is GetHomeDataErrorState?buildErrorLayout(cubit):Center(child: const CircularProgressIndicator())
         );
       },
     );
@@ -34,7 +41,9 @@ class HomeScreen extends StatelessWidget {
 
   Widget buildHomeWidget(HomeModel? homeModel, HomeCubit cubit) {
     return Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsetsDirectional.only(
+          start: 15,top:15,end:15
+        ),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -147,6 +156,7 @@ class HomeScreen extends StatelessWidget {
                     )
                 ]
             ),
+            SizedBox(height: 10,),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -156,7 +166,7 @@ class HomeScreen extends StatelessWidget {
                       child: Text(
                         product?.name ?? '',
                         style: TextStyle(fontSize: 14.0,height: 1.3),
-                        maxLines: 2,
+                        maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -226,6 +236,32 @@ class HomeScreen extends StatelessWidget {
             ),
           )
         ]),
+    );
+  }
+
+  Widget buildErrorLayout(HomeCubit cubit){
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'No internet connection',
+            style: TextStyle(fontSize: 20),
+          ),
+          SizedBox(height: 5,),
+          MaterialButton(
+              onPressed: (){
+                cubit.getHomeData();
+                cubit.getCategories();
+              },
+            textColor: Colors.white,
+            color: Colors.lightGreen,
+            child: Text(
+              'Retry',
+            ),
+          )
+        ],
+      ),
     );
   }
 }

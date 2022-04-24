@@ -20,6 +20,7 @@ class HomeCubit extends Cubit<HomeStates>{
   HomeModel? homeModel;
   
   Map<int,bool>favourites={};
+
   void getHomeData(){
     emit(GetHomeDataLoadingState());
     DioHelper.getData(url: 'home',token: token)
@@ -30,7 +31,6 @@ class HomeCubit extends Cubit<HomeStates>{
       });
       emit(GetHomeDataSuccessState());
     }).catchError((error){
-      print(error.toString());
       emit(GetHomeDataErrorState(error.toString()));
     });
   }
@@ -51,7 +51,6 @@ class HomeCubit extends Cubit<HomeStates>{
   void changeFavourites(int? productId){
     bool? fav=favourites[productId];
     favourites[productId!]=!fav!;
-
     emit(ChangeFavouritesState());
       DioHelper.postData(url: favorites, data: {'product_id':productId},token: token)
           .then((value){
@@ -59,11 +58,10 @@ class HomeCubit extends Cubit<HomeStates>{
             if(favouritesModel?.status==false){
                 favourites[productId]=fav;
             }
-          emit(ChangeFavouritesSuccessState());
+          emit(ChangeFavouritesSuccessState(favouritesModel!));
       }).catchError((error){
-        print(error);
         favourites[productId]=fav;
-        emit(ChangeFavouritesErrorState(error.toString()));
+        emit(ChangeFavouritesErrorState('Check internet connection'));
       });
   }
 }

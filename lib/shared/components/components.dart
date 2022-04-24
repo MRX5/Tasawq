@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/shared/styles/colors.dart';
 
 Widget defaultTextFormFiled({
@@ -82,6 +83,42 @@ Widget defaultTextButton({
       )
   );
 }
+
+void showToast({
+  required String msg,
+  required ToastState state,
+
+}
+){
+  Fluttertoast.showToast(
+    msg: msg,
+    backgroundColor: getToastBackground(state),
+    textColor: Colors.white,
+    toastLength: Toast.LENGTH_LONG,
+    fontSize: 16.0,
+    gravity: ToastGravity.BOTTOM
+  );
+}
+
+Color getToastBackground(ToastState state){
+  Color color;
+  switch(state){
+    case ToastState.SUCCESS:
+        color=Colors.green;
+        break;
+    case ToastState.ERROR:
+      color=Colors.red;
+      break;
+    case ToastState.WARNING:
+      color=Colors.amber;
+      break;
+  }
+  return color;
+}
+enum ToastState{
+  SUCCESS,ERROR,WARNING
+}
+
 
 void navigateTo({
   required BuildContext context,

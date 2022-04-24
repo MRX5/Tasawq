@@ -37,9 +37,8 @@ class RegisterCubit extends Cubit<RegisterStates>{
           'phone':phone
         }
     ).then((value){
-        print(value.data);
         var model=LoginModel.fromJson(value.data);
-        emit(RegisterUserSuccessState(model.data));
+        emit(RegisterUserSuccessState(model));
     }).catchError((error){
         emit(RegisterUserErrorState(error.toString()));
     });
