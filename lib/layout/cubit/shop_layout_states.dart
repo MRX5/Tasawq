@@ -1,4 +1,5 @@
 import 'package:shop_app/models/cart/cart_model.dart';
+import 'package:shop_app/models/login_model.dart';
 
 import '../../models/cart/change_cart_model.dart';
 import '../../models/favourites/change_favourites_model.dart';
@@ -65,6 +66,11 @@ class GetCartErrorState extends ShopLayoutStates{
   GetCartErrorState(this.error);
 }
 
+
+class IncreaseProductQuantityState extends ShopLayoutStates{}
+class DecreaseProductQuantityState extends ShopLayoutStates{}
+
+
 //Get Product Details
 class GetProductLoadingState extends ShopLayoutStates{}
 class GetProductSuccessStateState extends ShopLayoutStates{
@@ -76,6 +82,13 @@ class GetProductErrorState extends ShopLayoutStates{
   GetProductErrorState(this.error);
 }
 
-
-class IncreaseProductQuantityState extends ShopLayoutStates{}
-class DecreaseProductQuantityState extends ShopLayoutStates{}
+// Get Profile States
+class GetProfileLoadingState extends ShopLayoutStates{}
+class GetProfileSuccessState extends ShopLayoutStates{
+  final LoginModel loginModel;
+  GetProfileSuccessState(this.loginModel);
+}
+class GetProfileErrorState extends ShopLayoutStates{
+  final String error;
+  GetProfileErrorState(this.error);
+}

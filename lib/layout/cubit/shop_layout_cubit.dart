@@ -10,13 +10,13 @@ import 'package:shop_app/models/cart/change_cart_model.dart';
 import 'package:shop_app/modules/cart/cart_screen.dart';
 import 'package:shop_app/modules/favourites/favourites_screen.dart';
 import 'package:shop_app/modules/home/home_screen.dart';
-import 'package:shop_app/modules/settings/settings_screen.dart';
 import 'package:shop_app/shared/components/constants.dart';
 import '../../models/category_model.dart';
 import '../../models/favourites/change_favourites_model.dart';
 import '../../models/favourites/favouritesModel.dart';
 import '../../models/home_model.dart';
 import '../../models/product_details_model.dart';
+import '../../modules/profile/profile_screen.dart';
 import '../../shared/remote/dio_helper.dart';
 import '../../shared/remote/end_points.dart';
 
@@ -31,7 +31,7 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates>{
     HomeScreen(),
     CartScreen(),
     FavouritesScreen(),
-    SettingsScreen()
+    ProfileScreen()
   ];
 
 
@@ -47,7 +47,7 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates>{
 
   void getHomeData(){
     emit(GetHomeDataLoadingState());
-    DioHelper.getData(url: 'home',token: token)
+    DioHelper.getData(url: HOME_END_POINT,token: token)
         .then((value){
       homeModel=HomeModel.fromJson(value.data);
       homeModel?.data?.products.forEach((element) {
@@ -67,7 +67,7 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates>{
   CategoryModel?categoryModel;
   void getCategories(){
     emit(GetCategoriesLoadingState());
-    DioHelper.getData(url: 'categories')
+    DioHelper.getData(url: CATEGORIES_END_POINT)
         .then((value){
       categoryModel=CategoryModel.fromJson(value.data);
       emit(GetCategoriesSuccessState());
@@ -81,7 +81,7 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates>{
     bool? fav=favourites[productId];
     favourites[productId!]=!fav!;
     emit(ChangeFavouritesState());
-    DioHelper.postData(url: favorites, data: {'product_id':productId},token: token)
+    DioHelper.postData(url: FAVORITES_END_POINT, data: {'product_id':productId},token: token)
         .then((value){
       changeFavouritesModel=ChangeFavouritesModel.fromJson(value.data);
       if(changeFavouritesModel?.status==false){
@@ -99,7 +99,7 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates>{
   FavouritesModel? favouritesModel;
   void getFavouritesProducts(){
     emit(GetFavouritesLoadingState());
-    DioHelper.getData(url: favorites,token: token)
+    DioHelper.getData(url: FAVORITES_END_POINT,token: token)
         .then((value){
       favouritesModel=FavouritesModel.fromJson(value.data);
       favouritesModel?.data?.data.forEach((element) {
@@ -116,7 +116,7 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates>{
     bool? cart=inCart[productId!];
     inCart[productId]=!cart!;
     emit(ChangeCartState());
-    DioHelper.postData(url: 'carts', data: {'product_id':productId},token: token)
+    DioHelper.postData(url: CART_END_POINT, data: {'product_id':productId},token: token)
     .then((value){
       changeCartModel=ChangeCartModel.fromJson(value.data);
       if(changeCartModel?.status==false){
@@ -134,7 +134,7 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates>{
   CartModel? cartModel;
   void getInCartProducts(){
       emit(GetCartLoadingState());
-      DioHelper.getData(url: 'carts',token: token)
+      DioHelper.getData(url: CART_END_POINT,token: token)
       .then((value){
         cartModel=CartModel.fromJson(value.data);
         cartModel?.data?.cartItems.forEach((element) {

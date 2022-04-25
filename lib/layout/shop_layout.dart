@@ -21,9 +21,7 @@ class ShopLayout extends StatelessWidget {
       builder:(context,state){
         var cubit=ShopLayoutCubit.get(context);
         return Scaffold(
-          appBar:cubit.bottomNavIndex==0? buildHomeAppBar(context):AppBar(
-            title: Text('Tasawq'),
-          ),
+          appBar:buildHomeAppBar(context,cubit.bottomNavIndex),
           body: cubit.bottomNavScreens[cubit.bottomNavIndex],
           bottomNavigationBar: BottomNavigationBar(
             onTap: (index){
@@ -54,9 +52,9 @@ class ShopLayout extends StatelessWidget {
     );
   }
 
-   PreferredSizeWidget buildHomeAppBar(context){
+   PreferredSizeWidget buildHomeAppBar(context,int index){
     return AppBar(
-      leading: Padding(
+      leading: index==0?Padding(
         padding: const EdgeInsets.all(5.0),
         child: Container(
           decoration: BoxDecoration(
@@ -66,11 +64,27 @@ class ShopLayout extends StatelessWidget {
             ),
           ),
         ),
-      ),
-      title: Text(
-        'Hi, Mostafa',
-        style:Theme.of(context).textTheme.bodyText2,
-      ),
+      ):null,
+      centerTitle: index==0?false:true,
+      title:_getAppBarTitle(index, context)
+
+    );
+  }
+  
+  Widget _getAppBarTitle(int index,BuildContext context){
+    if(index==0){
+      return Text(
+      'Hi, Mostafa',
+      style:Theme.of(context).textTheme.bodyText2,
+    );}
+    String title='';
+    if(index==1)title='Cart';
+    else if(index==2)title='Favourites';
+    else title='Settings';
+
+    return Text(
+      title,
+      style: TextStyle(fontSize: 24),
     );
   }
 }

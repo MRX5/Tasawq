@@ -29,7 +29,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
   }){
 
     emit(RegisterUserLoadingState());
-    DioHelper.postData(url: REGISTER,
+    DioHelper.postData(url: REGISTER_END_POINT,
         data: {
           'email':email,
           'name':username,
