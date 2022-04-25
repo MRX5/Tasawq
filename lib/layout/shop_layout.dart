@@ -36,8 +36,8 @@ class ShopLayout extends StatelessWidget {
                   label: HOME,
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.apps),
-                  label: CATEGORIES
+                  icon: Icon(Icons.shopping_cart_outlined),
+                  label: CART
               ),
               BottomNavigationBarItem(
                   icon: Icon(Icons.favorite_outline),
@@ -69,10 +69,8 @@ class ShopLayout extends StatelessWidget {
       ),
       title: Text(
         'Hi, Mostafa',
-        style:Theme.of(context).textTheme.bodyText2,),
-      actions: [
-        IconButton(onPressed: (){}, icon: Icon(Icons.shopping_cart_outlined, ))
-      ],
+        style:Theme.of(context).textTheme.bodyText2,
+      ),
     );
   }
 }

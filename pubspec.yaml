@@ -44,7 +44,10 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   conditional_builder: ^1.0.2
   carousel_slider: ^4.0.0
+  carousel_indicator: ^1.0.6
   fluttertoast: ^8.0.9
+  flutter_rating_bar: ^4.0.0
+  money_formatter: ^0.0.3
 
 dev_dependencies:
   flutter_test:

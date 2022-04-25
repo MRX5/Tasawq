@@ -1,15 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder/conditional_builder.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app/layout/cubit/shop_layout_cubit.dart';
+import 'package:shop_app/layout/cubit/shop_layout_states.dart';
 import 'package:shop_app/models/category_model.dart';
 import 'package:shop_app/models/product_model.dart';
-import 'package:shop_app/modules/home/cubit/home_cubit.dart';
-import 'package:shop_app/modules/home/cubit/home_states.dart';
+import 'package:shop_app/modules/product_details/product_screen.dart';
 import 'package:shop_app/shared/components/components.dart';
 import 'package:shop_app/shared/components/constants.dart';
 import 'package:shop_app/shared/styles/colors.dart';
+import 'package:shop_app/utils/utils.dart';
 
 import '../../models/home_model.dart';
 
@@ -18,28 +19,30 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeStates>(
+    return BlocConsumer<ShopLayoutCubit, ShopLayoutStates>(
       listener: (context, state) {
         if(state is ChangeFavouritesSuccessState){
           if(!state.favouritesModel.status!){
             showToast(msg: state.favouritesModel.message!, state: ToastState.ERROR);
           }
-        }else if(state is ChangeFavouritesErrorState){
+        }
+        else if(state is ChangeFavouritesErrorState){
           showToast(msg: state.error, state: ToastState.ERROR);
         }
       },
       builder: (context, state) {
-        var cubit = HomeCubit.get(context);
+        var cubit = ShopLayoutCubit.get(context);
         return ConditionalBuilder(
             condition: cubit.homeModel != null && cubit.categoryModel != null,
-            builder: (context) => buildHomeWidget(cubit.homeModel, cubit),
-            fallback: (context) => state is GetHomeDataErrorState?buildErrorLayout(cubit):Center(child: const CircularProgressIndicator())
+            builder: (context) => buildHomeWidget(cubit.homeModel, context),
+            fallback: (context) => state is GetHomeDataErrorState?buildErrorLayout(context):const Center(child: CircularProgressIndicator())
         );
       },
     );
   }
 
-  Widget buildHomeWidget(HomeModel? homeModel, HomeCubit cubit) {
+  Widget buildHomeWidget(HomeModel? homeModel,BuildContext context) {
+    var cubit=ShopLayoutCubit.get(context);
     return Padding(
         padding: const EdgeInsetsDirectional.only(
           start: 15,top:15,end:15
@@ -117,7 +120,7 @@ class HomeScreen extends StatelessWidget {
                 childAspectRatio: 1 / 2,
                 children: List.generate(
                     homeModel?.data?.products.length ?? 0, (index) =>
-                    buildProductWidget(homeModel?.data?.products[index],cubit)),
+                    buildProductWidget(homeModel?.data?.products[index],context)),
               )
             ],
           ),
@@ -126,9 +129,12 @@ class HomeScreen extends StatelessWidget {
   }
 
 
-  Widget buildProductWidget(ProductModel? product,HomeCubit cubit) {
+  Widget buildProductWidget(ProductModel? product,context) {
+    var cubit=ShopLayoutCubit.get(context);
     return GestureDetector(
-      onTap: (){},
+      onTap: (){
+          navigateTo(context: context, screen: ProductScreen(productId: product?.id));
+      },
       child: Card(
         elevation: 2,
         child: Column(
@@ -174,7 +180,7 @@ class HomeScreen extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '${product?.price.round()}',
+                          Utils.formatPrice(product?.price.round(),withSymbol:false),
                           style: TextStyle(fontSize: 14, color: green),
                           maxLines: 1,
                         ),
@@ -239,7 +245,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildErrorLayout(HomeCubit cubit){
+  Widget buildErrorLayout(BuildContext context){
+    var cubit=ShopLayoutCubit.get(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

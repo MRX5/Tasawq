@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/layout/cubit/shop_layout_cubit.dart';
-import 'package:shop_app/modules/favourites/cubit/favourites_cubit.dart';
-import 'package:shop_app/modules/home/cubit/home_cubit.dart';
 import 'package:shop_app/modules/login/cubit/login_cubit.dart';
 import 'package:shop_app/modules/register/cubit/register_cubit.dart';
 import 'package:shop_app/shared/cubit/app_cubit.dart';
@@ -24,10 +22,8 @@ class MyApp extends StatelessWidget {
               create:(BuildContext context)=>AppCubit()..changeThemeMode(fromSharedPref: isDark)
           ),
           BlocProvider(
-            create: (BuildContext context)=>ShopLayoutCubit(),
+            create: (BuildContext context)=>ShopLayoutCubit()..getHomeData()..getCategories()..getFavouritesProducts(),
           ),
-          BlocProvider(create: (context)=>HomeCubit()..getHomeData()..getCategories()),
-          BlocProvider(create: (context)=>FavouritesCubit()),
         ],
 
         child:BlocConsumer<AppCubit,AppStates>(

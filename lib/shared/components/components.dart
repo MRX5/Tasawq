@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:shop_app/shared/styles/colors.dart';
 
 Widget defaultTextFormFiled({
@@ -119,6 +120,22 @@ enum ToastState{
   SUCCESS,ERROR,WARNING
 }
 
+Widget roundedIconContainer({
+  required Icon child,
+  double radius=10,
+  double padding=4,
+  Color color=Colors.white,
+}){
+  return Container(
+      padding: EdgeInsets.all(padding),
+      decoration: BoxDecoration(
+      color: color,
+      borderRadius: BorderRadius.circular(radius),
+      boxShadow: [BoxShadow(color: HexColor('C5C9D3'),blurRadius: 5)]
+      ),
+      child: child
+  );
+}
 
 void navigateTo({
   required BuildContext context,

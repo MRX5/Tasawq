@@ -3,7 +3,7 @@ const String IS_FIRST_TIME='is_first_time';
 const String TOKEN='token';
 
 const HOME='Home';
-const CATEGORIES='Categories';
+const CART='Cart';
 const FAVOURITES='Favourites';
 const SETTINGS='Settings';
 
