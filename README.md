@@ -1,4 +1,4 @@
-# shop_app
+# Tasawq 🛒
 
 A new Flutter project.
 
