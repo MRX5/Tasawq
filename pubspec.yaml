@@ -48,6 +48,7 @@ dependencies:
   fluttertoast: ^8.0.9
   flutter_rating_bar: ^4.0.0
   money_formatter: ^0.0.3
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:

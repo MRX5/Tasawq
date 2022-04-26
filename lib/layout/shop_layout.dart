@@ -80,7 +80,7 @@ class ShopLayout extends StatelessWidget {
     String title='';
     if(index==1)title='Cart';
     else if(index==2)title='Favourites';
-    else title='Settings';
+    else title='';
 
     return Text(
       title,

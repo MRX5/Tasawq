@@ -132,13 +132,13 @@ class CartScreen extends StatelessWidget {
                                         },
                                         icon: Icon(Icons.remove),
                                       constraints: BoxConstraints(),
-                                      padding: EdgeInsets.all(4),
+                                      padding: EdgeInsets.zero,
                                     ),
-                                    SizedBox(width: 10,),
+                                    SizedBox(width: 15,),
                                     Text(
                                       '${cubit.cartModel?.data?.cartItems[index].quantity}',
                                     ),
-                                    SizedBox(width: 10,),
+                                    SizedBox(width: 15,),
                                     IconButton(
                                         onPressed: (){
                                           cubit.increaseProductQuantity(productId: index);
