@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/layout/cubit/shop_layout_cubit.dart';
 import 'package:shop_app/modules/login/cubit/login_cubit.dart';
+import 'package:shop_app/modules/profile/cubit/profile_cubit.dart';
 import 'package:shop_app/modules/register/cubit/register_cubit.dart';
 import 'package:shop_app/shared/cubit/app_cubit.dart';
 import 'package:shop_app/shared/cubit/app_states.dart';
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (BuildContext context)=>ShopLayoutCubit()..getHomeData()..getCategories()..getFavouritesProducts(),
           ),
+          BlocProvider(
+              create: (BuildContext context)=>ProfileCubit()..getUserProfile()
+          )
         ],
 
         child:BlocConsumer<AppCubit,AppStates>(

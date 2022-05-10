@@ -11,12 +11,11 @@ class CartModel {
 
 class Data {
   List<CartItems> cartItems=[];
-  int? subTotal;
-  int? total;
+  double? subTotal;
+  double? total;
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['cart_items'] != null) {
-      cartItems = <CartItems>[];
       json['cart_items'].forEach((v) {
         cartItems.add(CartItems.fromJson(v));
       });
@@ -42,9 +41,9 @@ class CartItems {
 
 class Product {
   int id=0;
-  int price=0;
-  int oldPrice=0;
-  int discount=0;
+  dynamic price=0;
+  dynamic oldPrice=0;
+  dynamic discount=0;
   String? image;
   String? name;
   String? description;

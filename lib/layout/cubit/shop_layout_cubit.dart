@@ -142,6 +142,7 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates>{
         });
         emit(GetCartSuccessState(cartModel!));
       }).catchError((_){
+        print(_);
         emit(GetCartErrorState('Check internet connection'));
       });
   }
@@ -157,7 +158,6 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates>{
         token: token
     ).then((value){
       productDetailsModel = ProductDetailsModel.fromJson(value.data);
-      print(productDetailsModel!.data!.id);
       emit(GetProductSuccessStateState(productDetailsModel!));
     }).catchError((error){
       emit(GetProductErrorState('Check internet connection'));
@@ -166,8 +166,8 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates>{
 
   void increaseProductQuantity({required int productId}){
     cartModel?.data?.cartItems[productId].quantity++;
-    int sum=cartModel?.data?.subTotal??0;
-    sum+=(cartModel?.data?.cartItems[productId].product?.price) ??0;
+    double sum=cartModel?.data?.subTotal??0;
+    sum+=double.parse('${cartModel?.data?.cartItems[productId].product?.price}');
     cartModel?.data?.subTotal = sum;
     cartModel?.data?.total=sum;
     emit(IncreaseProductQuantityState());
@@ -176,8 +176,8 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates>{
     int quantity=cartModel?.data?.cartItems[productId].quantity ?? 0;
     if(quantity>0) {
       cartModel?.data?.cartItems[productId].quantity--;
-      int sum = cartModel?.data?.subTotal ?? 0;
-      sum -= (cartModel?.data?.cartItems[productId].product?.price) ?? 0;
+      double sum = cartModel?.data?.subTotal ?? 0;
+      sum -= double.parse('${cartModel?.data?.cartItems[productId].product?.price}');
       cartModel?.data?.subTotal = sum;
       cartModel?.data?.total = sum;
       emit(DecreaseProductQuantityState());

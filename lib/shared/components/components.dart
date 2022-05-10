@@ -15,7 +15,8 @@ Widget defaultTextFormFiled({
   Function()? onSuffixIconTap,
   TextInputType textInputType=TextInputType.text,
   bool obscureType=false,
-  double borderRadius=5
+  double borderRadius=5,
+  bool enabled=true
 }){
   return TextFormField(
     controller: controller,
@@ -27,8 +28,7 @@ Widget defaultTextFormFiled({
     decoration: InputDecoration(
         border:  OutlineInputBorder(
             borderRadius:BorderRadius.circular(borderRadius)
-        )
-        ,
+        ),
         prefixIcon: Icon(prefixIcon),
         hintText: label,
         suffixIcon: IconButton(
@@ -36,6 +36,7 @@ Widget defaultTextFormFiled({
           onPressed: onSuffixIconTap,
         )
     ),
+    enabled: enabled,
   );
 }
 
@@ -134,6 +135,20 @@ Widget roundedIconContainer({
       boxShadow: [BoxShadow(color: HexColor('C5C9D3'),blurRadius: 5)]
       ),
       child: child
+  );
+}
+
+Widget profileCircularImage({
+  required String imageUrl
+}){
+  return CircleAvatar(
+    radius: 50.0,
+    child: Image(
+      height: 100,
+      width: 100,
+      fit: BoxFit.cover,
+      image: NetworkImage(imageUrl),
+    ),
   );
 }
 
