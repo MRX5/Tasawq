@@ -22,6 +22,7 @@ class ProfileScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is UserLogoutSuccessState) {
           CacheHelper.removeData(key: TOKEN);
+          CacheHelper.removeData(key: USERNAME);
           showToast(msg: state.message, state: ToastState.SUCCESS);
           navigateAndFinish(context: context, screen: LoginScreen());
         } else if (state is UserLogoutErrorState) {
@@ -44,8 +45,7 @@ class ProfileScreen extends StatelessWidget {
                   Row(
                     children: [
                       profileCircularImage(
-                          imageUrl:
-                              'https://www.pngitem.com/pimgs/m/22-220721_circled-user-male-type-user-colorful-icon-png.png'),
+                          imageUrl: userAvatarImage),
                       const SizedBox(
                         width: 10,
                       ),

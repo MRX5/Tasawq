@@ -20,6 +20,7 @@ void main() {
     bool isDark = CacheHelper.getThemeMode();
     bool? onBoarding=CacheHelper.getData(key: IS_FIRST_TIME);
     token=CacheHelper.getData(key: TOKEN);
+    username=CacheHelper.getData(key: USERNAME);
     print(token);
     Widget startWidget;
 

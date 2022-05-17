@@ -16,7 +16,8 @@ Widget defaultTextFormFiled({
   TextInputType textInputType=TextInputType.text,
   bool obscureType=false,
   double borderRadius=5,
-  bool enabled=true
+  bool enabled=true,
+  Function(String)? onChanged
 }){
   return TextFormField(
     controller: controller,
@@ -24,6 +25,7 @@ Widget defaultTextFormFiled({
     onFieldSubmitted: onSubmit,
     onTap: onTap,
     obscureText: obscureType,
+    onChanged: onChanged,
     keyboardType: textInputType,
     decoration: InputDecoration(
         border:  OutlineInputBorder(
@@ -147,7 +149,7 @@ Widget profileCircularImage({
       height: 100,
       width: 100,
       fit: BoxFit.cover,
-      image: NetworkImage(imageUrl),
+      image: AssetImage(imageUrl),
     ),
   );
 }

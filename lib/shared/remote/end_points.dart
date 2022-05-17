@@ -7,3 +7,4 @@ const CATEGORIES_END_POINT='categories';
 const CART_END_POINT='carts';
 const PROFILE_END_POINT='profile';
 const UPDATE_PROFILE_END_POINT='update-profile';
+const SEARCH_END_POIINT='products/search';

@@ -59,8 +59,8 @@ class ShopLayout extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
-            image: DecorationImage(
-              image: NetworkImage('https://www.pngitem.com/pimgs/m/22-220721_circled-user-male-type-user-colorful-icon-png.png'),
+            image:  DecorationImage(
+              image: AssetImage(userAvatarImage),
             ),
           ),
         ),
@@ -74,7 +74,7 @@ class ShopLayout extends StatelessWidget {
   Widget _getAppBarTitle(int index,BuildContext context){
     if(index==0){
       return Text(
-      'Hi, Mostafa',
+      'Hi, $username',
       style:Theme.of(context).textTheme.bodyText2,
     );}
     String title='';

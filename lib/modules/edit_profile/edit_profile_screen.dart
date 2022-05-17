@@ -7,6 +7,7 @@ import 'package:shop_app/modules/profile/cubit/profile_states.dart';
 import 'package:shop_app/modules/profile/profile_screen.dart';
 
 import '../../shared/components/components.dart';
+import '../../shared/components/constants.dart';
 import '../../shared/styles/colors.dart';
 
 class EditProfileScreen extends StatelessWidget {
@@ -36,8 +37,7 @@ class EditProfileScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       profileCircularImage(
-                          imageUrl:
-                              'https://www.pngitem.com/pimgs/m/22-220721_circled-user-male-type-user-colorful-icon-png.png'),
+                          imageUrl: userAvatarImage),
                       const SizedBox(
                         height: 40.0,
                       ),
